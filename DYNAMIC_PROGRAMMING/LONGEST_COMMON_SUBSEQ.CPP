@@ -21,5 +21,22 @@ int main(){
             }
         }
     }
-    cout<<dp[l1][l2];
+    cout<<dp[l1][l2]<<'\n';
+    //finding the string (tracing)
+    i = l1,j = l2;
+    while(i && j){
+        if(arr[i-1] == brr[j-1]){
+            cout<<arr[i-1]<<"<--";
+            i--;
+            j--;
+        }
+        else{
+            if(dp[i][j-1] >= dp[i-1][j]){
+                j--;
+            }
+            else{
+                i--;
+            }
+        }
+    }
 }
