@@ -31,7 +31,7 @@ class linkedlist{
     void make_loop(){
         head -> next -> next -> next -> next = head;
     }
-    int find_loop_ptr(){
+    int find_loop_flag(){
         node* ptr = head;
         while(ptr){
             if(ptr->flag == 1){
@@ -42,7 +42,7 @@ class linkedlist{
         }
         return 0;
     }
-    int find_loop_flag(){
+    int find_loop_ptr(){
         node* slw_ptr = head;
         node* fast_ptr = head;
         while(slw_ptr && fast_ptr && fast_ptr->next){

@@ -1,3 +1,19 @@
+/*
+Given two singly linked lists of size N and M, write a program to get the point where two linked lists intersect each other.
+
+ 
+
+Example 1:
+
+Input:
+LinkList1 = 3->6->9->common
+LinkList2 = 10->common
+common = 15->30->NULL
+Output: 15
+*/
+
+//PRACTISE LINK: https://practice.geeksforgeeks.org/problems/intersection-point-in-y-shapped-linked-lists/1
+
 //BRUTE FORCE
 struct node* find_merge_point(struct node* temp1,struct node* temp2){
     struct node* a = temp1;
@@ -12,7 +28,7 @@ struct node* find_merge_point(struct node* temp1,struct node* temp2){
         len2++;
         b = b->next;
     }
-    b = temp2;
+    a = temp1;
     for(int i=0;i<len1;i++){
         b = temp2;
         for (int j=0;j<len2;j++)

@@ -1,3 +1,12 @@
+/*
+Input:
+   List1: 10->15->4->20
+   lsit2:  8->4->2->10
+Output:
+   Intersection List: 4->10
+   Union List: 2->8->20->4->15->10
+*/
+
 Node* find_mid(Node* head){
     Node* slw = head;
     Node* fast = head->next;
@@ -57,7 +66,7 @@ Node* findIntersection(Node* head1, Node* head2)
         else if(head1 && head1->data < head2->data){
             head1 = head1->next;
         }
-        else{
+        else if(head2){
             head2 = head2->next;
         }
     }
