@@ -59,46 +59,45 @@ class dll{
         }
     }
 
-    void insert_node_after(int pos,node* n){
-        node* ptr = head;
-        for(int i=1;ptr && i<pos-1;i++){
-            ptr = ptr->next;
+    void insert(int pos,node* t){
+        if(pos == 0){
+            t->prev = NULL;
+            t->next = head;
+            head->prev = t;
+            head = t;
         }
-        if(ptr){
-            node* nextnode = ptr->next;
-            if(nextnode == NULL){
-                ptr -> next = n;
-                n->prev = ptr;
-            } 
-            else{
-                n->next = nextnode;
-                nextnode->prev = n;
-                n->prev = ptr;
-                ptr->next = n;
+        else{
+            node* p = head;
+            for(int i=0;p && i<pos-1;i++){
+                p = p->next;
             }
+            t->next = p->next;
+            t->prev = p;
+            if(p->next){
+                p->next->prev = t;
+            }
+            p->next = t;
         }
     }
 
     void deletenode(int pos){
-        node* ptr = head;
-        for(int i=1;ptr && i < pos;i++){
-            ptr = ptr->next;
+        node* p = head;
+        if(pos == 0){
+            head = head->next;
+            delete p;
+            if(head){
+                head->prev = NULL;
+            }
         }
-        if(ptr){
-            if(ptr == head){
-                head = head->next;
+        else{
+            for(int i=0;i<pos-1;i++){
+                p = p->next;
             }
-            else{
-                node* nextnode = ptr->next;
-                node* prevnode = ptr->prev;
-                if(nextnode == NULL){
-                    prevnode -> next = NULL;
-                }
-                else{
-                    prevnode->next = nextnode;
-                    nextnode->prev = prevnode;
-                }
+            p->prev->next = p->next;
+            if(p->next){
+                p->next->prev = p->prev;
             }
+            delete p;
         }
     }
 
@@ -139,7 +138,7 @@ int main()
             case 3:
             cin>>num>>pos;
             n1->data = num;
-            obj.insert_node_after(pos,n1);
+            obj.insert(pos,n1);
             break;
             case 4:
             cin>>pos;
