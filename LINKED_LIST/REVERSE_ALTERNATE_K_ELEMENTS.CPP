@@ -1,28 +1,23 @@
-node *reverse(node *head,int k)  
-{  
-    node* curr = head;  
-    node* next;  
-    node* prev = NULL;  
-    int c = 0;  
-    while (curr && count < k)  
-    {  
-        next = curr -> next;  
-        curr -> next = prev;  
-        prev = curr;  
-        curr = next;  
-        c++;  
+listnode* solve(listnode* A, int B) {
+    int count = 0;
+    listnode *prev = NULL,*curr = A,*next = NULL;
+    while(count < B && curr){
+        next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+        count += 1;
     }
-    if(head != NULL){
-        head->next = curr;
-    }  
-    c = 0;  
-    while(c < k-1 && curr != NULL )  
-    {  
-    curr = curr -> next;  
-    count++;  
-    }  
-    if(current != NULL){  
-        curr -> next = reverse(curr -> next, k);  
+    if(A){
+        A->next = curr;
     }
-    return prev;  
+    count  = 0;
+    while(curr && count < B-1){
+        curr = curr -> next;
+        count += 1;
+    }
+    if(curr){
+        curr -> next = solve(curr->next,B);
+    }
+    return prev;
 }
