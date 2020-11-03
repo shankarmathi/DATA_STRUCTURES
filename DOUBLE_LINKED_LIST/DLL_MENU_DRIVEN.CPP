@@ -64,7 +64,7 @@ class dll{
         for(int i=1;ptr && i<pos-1;i++){
             ptr = ptr->next;
         }
-        if(n){
+        if(ptr){
             node* nextnode = ptr->next;
             if(nextnode == NULL){
                 ptr -> next = n;
