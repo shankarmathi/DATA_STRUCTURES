@@ -1,6 +1,5 @@
 #include <iostream>
 #include <queue>
-#include <stack>
 
 using namespace std;
 
@@ -53,38 +52,23 @@ class bt{
         }
     }
 
-    void postorder(node* p){
+    void levelorder(node* p){
+        queue<node*> q;
         if(p){
-            postorder(p->left);
-            postorder(p->right);
             cout<<p->data<<" ";
+            q.push(p);
         }
-    }
-
-    void postorder_stack(node* p){
-        if(p == NULL){
-            return;
-        }
-        stack<node*> s1,s2;
-        s1.push(p);
-        node* t;
-        while (!s1.empty())
-        {
-            t = s1.top();
-            s1.pop();
-            s2.push(t);
-            if(t->left){
-                s1.push(t->left);
+        while(!q.empty()){
+            p = q.front();
+            q.pop();
+            if(p->left){
+                cout<<p->left->data<<" ";
+                q.push(p->left);
             }
-            if(t->right){
-                s1.push(t->right);
+            if(p->right){
+                cout<<p->right->data<<" ";
+                q.push(p->right);
             }
-        }
-
-        while (!s2.empty())
-        {
-            cout<<s2.top()->data<<" ";
-            s2.pop();
         }
     }
 };
@@ -92,7 +76,5 @@ class bt{
 int main(){
     bt obj;
     obj.create();
-    obj.postorder(obj.root);
-    cout<<"\n";
-    obj.postorder_stack(obj.root);
+    obj.levelorder(obj.root);
 }

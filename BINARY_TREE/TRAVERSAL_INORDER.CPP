@@ -1,5 +1,6 @@
 #include <iostream>
 #include <queue>
+#include <stack>
 
 using namespace std;
 
@@ -60,10 +61,28 @@ class bt{
         }
     }
 
+    void inorder_using_stack(node* p){
+        stack<node*> s;
+        while(p || !s.empty()){
+            if(p){
+                s.push(p);
+                p = p->left;
+            }
+            else{
+                p = s.top();
+                s.pop();
+                cout<<p->data<<" ";
+                p = p->right;
+            }
+        }
+    }
+
 };
 
 int main(){
     bt obj;
     obj.create();
     obj.inorder(obj.root);
+    cout<<'\n';
+    obj.inorder_using_stack(obj.root);
 }

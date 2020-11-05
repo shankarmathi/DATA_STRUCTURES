@@ -1,6 +1,6 @@
 #include <iostream>
 #include <queue>
-#include <stack>
+#include <map>
 
 using namespace std;
 
@@ -9,11 +9,14 @@ class node{
     int data;
     node* left;
     node* right;
+    int height;
 
     node(int x){
         data = x;
         left = right = NULL;
+        height = 0;
     }
+
 };
 
 class bt{
@@ -53,38 +56,34 @@ class bt{
         }
     }
 
-    void postorder(node* p){
-        if(p){
-            postorder(p->left);
-            postorder(p->right);
-            cout<<p->data<<" ";
-        }
-    }
+    void bottom_view(node* p){
+        queue<node*> q;
+        map<int,int> m;
 
-    void postorder_stack(node* p){
         if(p == NULL){
             return;
         }
-        stack<node*> s1,s2;
-        s1.push(p);
-        node* t;
-        while (!s1.empty())
+
+        q.push(p);
+
+        while (!q.empty())
         {
-            t = s1.top();
-            s1.pop();
-            s2.push(t);
-            if(t->left){
-                s1.push(t->left);
+            node* temp = q.front();
+            q.pop();
+            int hd = temp->height;
+            m[hd] = temp->data;
+            if(temp->left){
+                temp->left->height = hd-1;
+                q.push(temp->left);
             }
-            if(t->right){
-                s1.push(t->right);
+            if(temp->right){
+                temp->right->height = hd+1;
+                q.push(temp->right);
             }
         }
-
-        while (!s2.empty())
-        {
-            cout<<s2.top()->data<<" ";
-            s2.pop();
+        
+        for(auto i:m){
+            cout<<i.second<<" ";
         }
     }
 };
@@ -92,7 +91,5 @@ class bt{
 int main(){
     bt obj;
     obj.create();
-    obj.postorder(obj.root);
-    cout<<"\n";
-    obj.postorder_stack(obj.root);
+    obj.bottom_view(obj.root);
 }

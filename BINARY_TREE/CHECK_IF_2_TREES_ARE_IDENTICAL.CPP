@@ -1,6 +1,5 @@
 #include <iostream>
 #include <queue>
-#include <stack>
 
 using namespace std;
 
@@ -52,47 +51,30 @@ class bt{
             }
         }
     }
-
-    void postorder(node* p){
-        if(p){
-            postorder(p->left);
-            postorder(p->right);
-            cout<<p->data<<" ";
-        }
-    }
-
-    void postorder_stack(node* p){
-        if(p == NULL){
-            return;
-        }
-        stack<node*> s1,s2;
-        s1.push(p);
-        node* t;
-        while (!s1.empty())
-        {
-            t = s1.top();
-            s1.pop();
-            s2.push(t);
-            if(t->left){
-                s1.push(t->left);
-            }
-            if(t->right){
-                s1.push(t->right);
-            }
-        }
-
-        while (!s2.empty())
-        {
-            cout<<s2.top()->data<<" ";
-            s2.pop();
-        }
-    }
 };
 
+int check_identical(node* x,node* y){
+    if(x == NULL && y == NULL){
+        return 1;
+    }
+    if(x == NULL || y == NULL){
+        return 0;
+    }
+
+    return x->data == y->data && check_identical(x->left,y->left) && check_identical(x->right,y->right);
+}
+
 int main(){
-    bt obj;
-    obj.create();
-    obj.postorder(obj.root);
-    cout<<"\n";
-    obj.postorder_stack(obj.root);
+    bt obj1,obj2;
+    cout<<"ENTER VALUES OF FIRST TREE\n";
+    obj1.create();
+    cout<<"ENTER VALUES OF SECOND TREE\n";
+    obj2.create();
+    int x = check_identical(obj1.root,obj2.root);
+    if(x == 1){
+        cout<<"YES";
+    }
+    else{
+        cout<<"NO";
+    }
 }

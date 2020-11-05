@@ -1,18 +1,22 @@
 #include <iostream>
 #include <queue>
-#include <stack>
+#include <map>
 
 using namespace std;
+
+//this program is a combination of level order + vertical order
 
 class node{
     public:
     int data;
     node* left;
     node* right;
+    int height;
 
     node(int x){
         data = x;
         left = right = NULL;
+        height = 0;
     }
 };
 
@@ -53,38 +57,35 @@ class bt{
         }
     }
 
-    void postorder(node* p){
-        if(p){
-            postorder(p->left);
-            postorder(p->right);
-            cout<<p->data<<" ";
-        }
-    }
-
-    void postorder_stack(node* p){
+    void topview(node* p){
+        queue<node*> q;
+        map<int,int> m;
         if(p == NULL){
             return;
         }
-        stack<node*> s1,s2;
-        s1.push(p);
-        node* t;
-        while (!s1.empty())
-        {
-            t = s1.top();
-            s1.pop();
-            s2.push(t);
-            if(t->left){
-                s1.push(t->left);
+
+        q.push(p);
+
+        while(!q.empty()){
+            node* temp = q.front();
+            q.pop();
+            int hd = temp->height; 
+            //hd horizontal distance
+            if(m[hd] == 0){
+                m[hd] = temp->data;
             }
-            if(t->right){
-                s1.push(t->right);
+            if(temp->left != NULL){
+                temp->left->height = hd-1;
+                q.push(temp->left);
+            }
+            if(temp->right != NULL){
+                temp->right->height = hd+1;
+                q.push(temp->right);
             }
         }
 
-        while (!s2.empty())
-        {
-            cout<<s2.top()->data<<" ";
-            s2.pop();
+        for(auto i:m){
+            cout<<i.second<<" ";
         }
     }
 };
@@ -92,7 +93,5 @@ class bt{
 int main(){
     bt obj;
     obj.create();
-    obj.postorder(obj.root);
-    cout<<"\n";
-    obj.postorder_stack(obj.root);
+    obj.topview(obj.root);
 }
